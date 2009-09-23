@@ -16,11 +16,11 @@ use WWW::Search::Scrape::Google;
 
 =head1 VERSION
 
-Version 0.01
+Version 0.01b
 
 =cut
 
-our $VERSION = '0.01';
+our $VERSION = '0.01b';
 
 
 =head1 SYNOPSIS

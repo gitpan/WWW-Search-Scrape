@@ -10,4 +10,10 @@ BEGIN
     ok(!search({engine => 'GooGlE'}));
     ok(!search({engine => 'GooGlE', results => 0}));
     ok(search({engine => 'GooGlE', results => '1', keyword => 'x'}));
+
+    $res = search({engine => 'GooGlE', results => '50', keyword => 'test'});
+    use Data::Dumper;
+    warn Dumper($res);
+    warn $res->{num};
+    ok($res->{num} > 500);
 }
