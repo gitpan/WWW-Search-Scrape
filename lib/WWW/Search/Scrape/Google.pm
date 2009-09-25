@@ -22,7 +22,7 @@ our $VERSION = '0.01b';
 
 =head1 SYNOPSIS
 
-  You are not expected to use this module directly. Please use WWW::Search::Scrape instead.
+You are not expected to use this module directly. Please use WWW::Search::Scrape instead.
 
 =cut
 
@@ -30,14 +30,15 @@ our $VERSION = '0.01b';
 
 =head2 search
 
- 'search is the most important function in this module.
+search is the most important function in this module.
 
 Inputs
-+---------------------------+
-|        keyword            |
-+---------------------------+
-| desired number of results |
-+---------------------------+
+
+ +---------------------------+
+ |        keyword            |
+ +---------------------------+
+ | desired number of results |
+ +---------------------------+
 
 Actually there is another optional argument, content, which is used in debug/test. It will replace LWP::UserAgent.
 

@@ -9,6 +9,7 @@ use Data::Dumper;
 use Carp;
 
 use WWW::Search::Scrape::Google;
+use WWW::Search::Scrape::Bing;
 
 =head1 NAME
 
@@ -20,7 +21,7 @@ Version 0.01b
 
 =cut
 
-our $VERSION = '0.01b';
+our $VERSION = '0.02';
 
 
 =head1 SYNOPSIS
@@ -33,20 +34,18 @@ our $VERSION = '0.01b';
 
 =head1 DESCRIPTION
 
-=head1 DESCRIPTION
+Most search engines do not provide full-function search API.
 
-  Most search engines do not provide full-function search API.
+Google finally shut down its Google search API on Sept 2009, while the registration for Google Search API had been disabled for years actually. The follower -- Google AJAX API, is simple not satisfied enough. That is why I wrote this module.
 
-  Google finally shut down its Google search API on Sept 2009, while the registration for Google Search API had been disabled for years actually. The follower -- Google AJAX API, is simple not satisfied enough. That is why I wrote this module.
+The purpose of this module is provide a simple interface to extract top search results from Google search engine, and keep this interface as simple as possible (as soon as possible as well).
 
-  The purpose of this module is provide a simple interface to extract top search results from Google search engine, and keep this interface as simple as possible (as soon as possible as well).
-
-  Currently, it supports 'google.com' only. And maybe English as well. I schedule to add more functions soon.
+Currently, it supports 'google.com' only. And maybe English as well.  I schedule to add more functions soon.
 
 =head1 EXPORT
 
 
-  There is only one function in WWW::Search::Scrape -- search.
+There is only one function in WWW::Search::Scrape -- search.
 
 =cut
 
@@ -66,20 +65,23 @@ our @EXPORT = qw();
 search is the most important function in this module. It is used as a dispatcher for corresponding search engines -- Google, Yahoo, Bing etc.
 
 It accepts a config hash. Possible keys are,
-+---------+--------------------------------------------------------+
-| engine  | The name for the search engine, like 'google', 'bing'  |
-+---------+--------------------------------------------------------+
-| keyword | The keyword(s) for the searching terms                 |
-+---------+--------------------------------------------------------+
-| results | How many results should be returned    (default: 10)   |
-+---------+--------------------------------------------------------+
+
+  +---------+--------------------------------------------------------+
+  | engine  | The name for the search engine, like 'google', 'bing'  |
+  +---------+--------------------------------------------------------+
+  | keyword | The keyword(s) for the searching terms                 |
+  +---------+--------------------------------------------------------+
+  | results | How many results should be returned    (default: 10)   |
+  +---------+--------------------------------------------------------+
+
 
 It returns a hash ref
-+---------+-------------------------------------------------------------------------+
-|   num   | How many items the search engine are able to return? (estimated number) |
-+---------+-------------------------------------------------------------------------+
-| results | List of returned results                                                +
-+---------+-------------------------------------------------------------------------+
+
+  +---------+-------------------------------------------------------------------------+
+  |   num   | How many items the search engine are able to return? (estimated number) |
+  +---------+-------------------------------------------------------------------------+
+  | results | List of returned results                                                +
+  +---------+-------------------------------------------------------------------------+
 
 =cut
 
@@ -110,6 +112,9 @@ sub search (%) {
 
     if (lc $q->{engine} eq 'google') {
         return WWW::Search::Scrape::Google::search($q->{keyword}, $q->{results});
+    }
+    elsif (lc $q->{engine} eq 'bing') {
+        return WWW::Search::Scrape::Bing::search($q->{keyword}, $q->{results});
     }
     else {
         carp 'Search engine ' . $q->{engine} . ' not implemented yet.';

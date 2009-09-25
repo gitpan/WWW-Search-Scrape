@@ -1,5 +1,8 @@
 Revision history for WWW-Search-Scrape
 
+0.02    25 Sep 2009/10:PM
+	Add Bing.
+
 0.01b   23 Sep 2009/8:00PM
 	Google returns results number properly now.
 
