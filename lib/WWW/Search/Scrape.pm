@@ -17,20 +17,20 @@ use WWW::Search::Scrape::Bing;
 
 =head1 VERSION
 
-Version 0.01b
+Version 0.03
 
 =cut
 
-our $VERSION = '0.02';
+our $VERSION = '0.03';
 
 
 =head1 SYNOPSIS
 
 
   use WWW::Search::Scrape qw/:all/;
-  my $result = search(engine => 'google', keyword =>'keywords', results => 10);
+  my $result = search({engine => 'google', keyword =>'keywords', results => 10});
   print "Google returns " . $result->{num} . " results\n";
-  print $_, "\n" foreach (@{$result->{num}});
+  print $_, "\n" foreach (@{$result->{results}});
 
 =head1 DESCRIPTION
 
