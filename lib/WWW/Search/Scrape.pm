@@ -17,11 +17,11 @@ use WWW::Search::Scrape::Bing;
 
 =head1 VERSION
 
-Version 0.03
+Version 0.04
 
 =cut
 
-our $VERSION = '0.03';
+our $VERSION = '0.04';
 
 
 =head1 SYNOPSIS
@@ -34,13 +34,13 @@ our $VERSION = '0.03';
 
 =head1 DESCRIPTION
 
-Most search engines do not provide full-function search API.
+Most search engines do not provide search API.
 
-Google finally shut down its Google search API on Sept 2009, while the registration for Google Search API had been disabled for years actually. The follower -- Google AJAX API, is simple not satisfied enough. That is why I wrote this module.
+Google finally stop its Google search API in Sept 2009, while the registration for it had already been disabled for years. Google AJAX API is not powerful enough.
 
-The purpose of this module is provide a simple interface to extract top search results from Google search engine, and keep this interface as simple as possible (as soon as possible as well).
+The purpose of this module is to provide a simple interface to extract top search results from Google search engines (as well as others), and keep this interface as simple as possible (as soon as possible as well).
 
-Currently, it supports 'google.com' only. And maybe English as well.  I schedule to add more functions soon.
+Currently, it supports English Google and Bing only. I schedule to add more functions soon.
 
 =head1 EXPORT
 

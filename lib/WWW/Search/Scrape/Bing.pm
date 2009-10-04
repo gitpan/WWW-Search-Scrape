@@ -15,11 +15,11 @@ use HTML::TreeBuilder;
 
 =head1 VERSION
 
-Version 0.03
+Version 0.04
 
 =cut
 
-our $VERSION = '0.03';
+our $VERSION = '0.04';
 
 =head1 SYNOPSIS
 
@@ -100,6 +100,8 @@ sub search($$;$)
                                     {
                                         return unless $_[0]->attr('class') && $_[0]->attr('class') eq 'sb_count';
                                     });
+        return {num => 0, results => undef} unless $xx;
+
         my @r = $xx->content_list;
         my ($number) = $r[0] =~ /of ([\d,]+) res/;
         $num = join('', split(',', $number));
