@@ -5,8 +5,9 @@ use strict;
 
 use Carp;
 
-use LWP::UserAgent;
+#use LWP::UserAgent;
 use HTML::TreeBuilder;
+use WWW::Mechanize;
 
 =head1 NAME
 
@@ -14,11 +15,11 @@ use HTML::TreeBuilder;
 
 =head1 VERSION
 
-Version 0.04
+Version 0.05
 
 =cut
 
-our $VERSION = '0.04';
+our $VERSION = '0.05';
 
 =head1 SYNOPSIS
 
@@ -44,6 +45,7 @@ Actually there is another optional argument, content, which is used in debug/tes
 
 =cut
 
+our $frontpage = 'http://www.google.com/ncr';
 
 sub search($$;$)
 {
@@ -64,19 +66,20 @@ sub search($$;$)
 
     unless ($content)
     {
-	    my $ua = LWP::UserAgent->new;
-	    $ua->agent('NotWannaTellYou');
-
-	    my $url = "http://www.google.com/search?hl=en&num=100&q=${keyword}&start=0&sa=N";
-# http://www.google.com/search?hl=en&num=100&q=test&start=100&sa=N
-
-### Query URL is: $url
-
-	    my $response = 
-	    $ua->get($url);
-	    if ($response->is_success) {
-		    $content = $response->decoded_content;
-	    }
+        my $mech = WWW::Mechanize->new(agent => 'NotWannaTellYou', cookie_jar => {});
+        $mech->get($frontpage);
+        $mech->dump_forms;
+        $mech->submit_form(
+                           form_number => 1,
+                           fields => {
+                                      q => $keyword,
+                                      num => 100,
+                                      start => 0,
+                                      },
+                           button => 'btnG');
+        if ($mech->success) {
+            $content = $mech->response()->decoded_content();
+        }
     }
 
     if (! $content)
@@ -91,36 +94,35 @@ sub search($$;$)
 
     # parse Google returned number
     {
-	my ($xx) = $tree->look_down('_tag', 'div',
-				    sub
-				    {
-					return unless $_[0]->attr('id') && $_[0]->attr('id') eq 'ssb';
-				    });
-	my ($p) = $xx->look_down('_tag', 'p');
+        my ($xx) = $tree->look_down('_tag', 'div',
+                                    sub
+                                    {
+                                        return unless $_[0]->attr('id') && $_[0]->attr('id') eq 'ssb';
+                                    });
+        my ($p) = $xx->look_down('_tag', 'p');
 
-	carp 'Can not parse Google result.' unless $p && ref $p eq 'HTML::Element';
+        carp 'Can not parse Google result.' unless $p && ref $p eq 'HTML::Element';
 
-	my @r = $p->look_down('_tag', 'b');
-	if (scalar @r <= 3)
-	{
-		### No results.
-		return {num => 0, results => undef};
-	}
+        my @r = $p->look_down('_tag', 'b');
+        if (scalar @r <= 3) {
+            ### No results.
+            return {num => 0, results => undef};
+        }
 
-	@r = $r[2]->content_list;
-	$num = join('', split(',', $r[0]));
-	### Google returns: $num
+        @r = $r[2]->content_list;
+        $num = join('', split(',', $r[0]));
+        ### Google returns: $num
     }
 
     my @x = $tree->look_down('_tag', 'h3', 
 			     sub {
-				 return unless $_[0] && $_[0]->attr('class') && $_[0]->attr('class') eq 'r';
-				 1;
+                     return unless $_[0] && $_[0]->attr('class') && $_[0]->attr('class') eq 'r';
+                     1;
 			     });
 
     foreach (@x) {
-	my ($link) = $_->look_down('_tag', 'a');
-	push @res, $link->attr('href') unless $link->attr('href') =~ /^\//;
+        my ($link) = $_->look_down('_tag', 'a');
+        push @res, $link->attr('href') unless $link->attr('href') =~ /^\//;
     }
 
 ### Result: @res

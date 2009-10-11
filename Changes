@@ -1,5 +1,9 @@
 Revision history for WWW-Search-Scrape
 
+0.05    11 Oct 2009/09:00
+    Default use google.com/ncr 
+    Add frontpage parameter to dispatch target country for google
+
 0.04    4 Oct 2009/13:00
     Bing return proper value when there is no result.
 
