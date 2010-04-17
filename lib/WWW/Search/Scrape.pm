@@ -10,6 +10,7 @@ use Carp;
 
 use WWW::Search::Scrape::Google;
 use WWW::Search::Scrape::Bing;
+use WWW::Search::Scrape::Yahoo;
 
 =head1 NAME
 
@@ -17,11 +18,11 @@ use WWW::Search::Scrape::Bing;
 
 =head1 VERSION
 
-Version 0.06
+Version 0.07
 
 =cut
 
-our $VERSION = '0.06';
+our $VERSION = '0.07';
 
 
 =head1 SYNOPSIS
