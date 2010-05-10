@@ -1,6 +1,6 @@
 --- #YAML:1.0
 name:                WWW-Search-Scrape
-version:             0.07
+version:             0.08
 abstract:            ~
 license:             perl
 author:              
@@ -10,6 +10,7 @@ distribution_type:   module
 requires:     
     Data::Dumper:                  0
     HTML::TreeBuilder:             0
+    HTML::TreeBuilder::XPath:      0
     Test::More:                    0
     Test::Simple:                  0
     WWW::Mechanize:                0

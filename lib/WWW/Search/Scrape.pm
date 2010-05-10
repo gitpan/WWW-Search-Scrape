@@ -18,11 +18,11 @@ use WWW::Search::Scrape::Yahoo;
 
 =head1 VERSION
 
-Version 0.07
+Version 0.08
 
 =cut
 
-our $VERSION = '0.07';
+our $VERSION = '0.08';
 
 
 =head1 SYNOPSIS
@@ -112,15 +112,14 @@ sub search (%) {
     }
 
     if (lc $q->{engine} eq 'google') {
-	if ($q->{geo_location}) {
-	     $WWW::Search::Scrape::Google::geo_location = $q->{geo_location};
-	}
+        if ($q->{geo_location}) {
+            $WWW::Search::Scrape::Google::geo_location = $q->{geo_location};
+        }
         if ($q->{frontpage}) {
             $WWW::Search::Scrape::Google::frontpage = $q->{frontpage};
         }
         return WWW::Search::Scrape::Google::search($q->{keyword}, $q->{results});
-    }
-    elsif (lc $q->{engine} eq 'bing') {
+    } elsif (lc $q->{engine} eq 'bing') {
         return WWW::Search::Scrape::Bing::search($q->{keyword}, $q->{results});
     }
     else {
